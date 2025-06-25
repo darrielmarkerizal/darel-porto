@@ -10,6 +10,8 @@ import {
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { MessageCircleIcon } from "lucide-react";
 
 export default function Navbar() {
   return (
@@ -68,6 +70,20 @@ export default function Navbar() {
             <TooltipContent>
               <p>Theme</p>
             </TooltipContent>
+          </Tooltip>
+        </DockIcon>
+        <DockIcon>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="default"
+                size="icon"
+                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+              >
+                <MessageCircleIcon className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Let&apos;s Talk</TooltipContent>
           </Tooltip>
         </DockIcon>
       </Dock>

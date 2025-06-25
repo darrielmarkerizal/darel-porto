@@ -75,7 +75,7 @@ export const DATA = {
       title: "Fullstack Developer",
       logoUrl: "/detik.png",
       start: "2024",
-      end: "Present",
+      end: "2024",
       description:
         "Revolutionized content management efficiency by reducing processing time by 87% (from 5 days to 15 hours) for regional admins handling 10,000+ monthly articles from 150+ active contributors. Enhanced front-end performance with Next.js 14, cutting download processing times by 35.6% and optimized backend bulk upload in Laravel 8, reducing processing time by 53.8% through batch size tuning and parallel processing.",
     },
@@ -295,4 +295,11 @@ export const DATA = {
       links: [],
     },
   ],
+
+  stats: {
+    experience: 2,
+    projects: 10,
+    clients: 15,
+    technologies: 11,
+  },
 } as const;
