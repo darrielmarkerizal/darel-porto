@@ -64,10 +64,8 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="light">
           <TooltipProvider delayDuration={0}>
-            <PortfolioLoader>
-              {children}
-              <Navbar />
-            </PortfolioLoader>
+            <PortfolioLoader>{children}</PortfolioLoader>
+            <Navbar />
           </TooltipProvider>
         </ThemeProvider>
       </body>
