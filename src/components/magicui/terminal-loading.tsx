@@ -10,16 +10,10 @@ interface TerminalLoadingProps {
 }
 
 const commands = [
-  "$ cd /portfolio",
-  "$ npm install",
-  "✓ Dependencies installed successfully",
-  "$ npm run build",
-  "✓ Building application...",
-  "✓ Optimizing assets...",
-  "✓ Build completed successfully",
+  "$ cd /darriel-portfolio",
   "$ npm start",
-  "✓ Server starting...",
-  "✓ Portfolio loaded successfully",
+  "✓ Loading components...",
+  "✓ Initializing portfolio...",
   "🚀 Welcome to Darriel's Portfolio!",
 ];
 
@@ -41,11 +35,11 @@ export const TerminalLoading = ({
           setIsComplete(true);
           const finalTimer = setTimeout(() => {
             onComplete?.();
-          }, 1500);
+          }, 800);
           return () => clearTimeout(finalTimer);
         }
       },
-      currentCommandIndex === -1 ? 800 : 1000
+      currentCommandIndex === -1 ? 400 : 600
     );
 
     return () => clearTimeout(timer);
@@ -65,7 +59,7 @@ export const TerminalLoading = ({
     >
       <div ref={terminalRef} className="w-full max-w-2xl">
         <Terminal className="bg-background/95 backdrop-blur-sm border-border/50 p-2">
-          <div className="space-y-2 min-h-[300px]">
+          <div className="space-y-2 min-h-[200px]">
             {commands
               .slice(0, currentCommandIndex + 1)
               .map((command, index) => {
@@ -77,7 +71,7 @@ export const TerminalLoading = ({
                   <div key={index} className="flex items-start">
                     {isCurrentCommand ? (
                       <TypingAnimation
-                        duration={30}
+                        duration={20}
                         className={cn(
                           "font-mono text-sm",
                           isSuccess && "text-green-400",
@@ -117,12 +111,12 @@ export const TerminalLoading = ({
         {/* Progress bar - sama lebar dengan terminal */}
         <div className="mt-6 w-full">
           <div className="flex justify-between text-sm text-muted-foreground mb-2">
-            <span>Loading Portfolio...</span>
+            <span>Loading Darriel&apos;s Portfolio...</span>
             <span>{progressPercentage}%</span>
           </div>
           <div className="w-full bg-border rounded-full h-2">
             <div
-              className="bg-foreground h-2 rounded-full transition-all duration-500 ease-out"
+              className="bg-foreground h-2 rounded-full transition-all duration-300 ease-out"
               style={{
                 width: `${progressPercentage}%`,
               }}

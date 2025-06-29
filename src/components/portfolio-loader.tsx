@@ -12,6 +12,7 @@ export const PortfolioLoader = ({ children }: PortfolioLoaderProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoader, setShowLoader] = useState(true);
   const [gsap, setGsap] = useState<any>(null);
+  const [gsapLoaded, setGsapLoaded] = useState(false);
   const loaderRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -21,15 +22,28 @@ export const PortfolioLoader = ({ children }: PortfolioLoaderProps) => {
       try {
         const gsapModule = await import("gsap");
         setGsap(gsapModule.gsap);
+        setGsapLoaded(true);
       } catch (error) {
         console.warn("GSAP not found, falling back to CSS transitions");
+        setGsapLoaded(true); // Set to true even on error to proceed
       }
     };
     loadGSAP();
   }, []);
 
+  // Initialize content state when GSAP is loaded
+  useEffect(() => {
+    if (gsap && contentRef.current && isLoading && gsapLoaded) {
+      // Initial state for content
+      gsap.set(contentRef.current, {
+        y: 50,
+        opacity: 0,
+      });
+    }
+  }, [gsap, isLoading, gsapLoaded]);
+
   const handleLoadingComplete = () => {
-    if (gsap && loaderRef.current && contentRef.current) {
+    if (gsap && loaderRef.current && contentRef.current && gsapLoaded) {
       // GSAP animation sequence
       const tl = gsap.timeline({
         onComplete: () => {
@@ -61,27 +75,18 @@ export const PortfolioLoader = ({ children }: PortfolioLoaderProps) => {
           "-=0.3"
         );
     } else {
-      // Fallback without GSAP
+      // Fallback without GSAP - ensure content is visible
       setShowLoader(false);
       setTimeout(() => {
         setIsLoading(false);
+        // Ensure content is visible in fallback
+        if (contentRef.current) {
+          contentRef.current.style.opacity = "1";
+          contentRef.current.style.transform = "translateY(0)";
+        }
       }, 500);
     }
   };
-
-  useEffect(() => {
-    if (gsap && contentRef.current && isLoading) {
-      // Initial state for content
-      gsap.set(contentRef.current, {
-        y: 50,
-        opacity: 0,
-      });
-    }
-  }, [gsap, isLoading]);
-
-  if (!isLoading) {
-    return <div ref={contentRef}>{children}</div>;
-  }
 
   return (
     <>
@@ -105,9 +110,14 @@ export const PortfolioLoader = ({ children }: PortfolioLoaderProps) => {
       <div
         ref={contentRef}
         className={cn(
-          isLoading ? "opacity-0 pointer-events-none" : "opacity-100",
-          "transition-opacity duration-500"
+          "transition-opacity duration-500",
+          isLoading ? "opacity-0 pointer-events-none" : "opacity-100"
         )}
+        style={{
+          // Fallback styles untuk memastikan content terlihat
+          opacity: isLoading ? 0 : 1,
+          transform: isLoading ? "translateY(50px)" : "translateY(0)",
+        }}
       >
         {children}
       </div>
