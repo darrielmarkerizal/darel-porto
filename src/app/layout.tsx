@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import PortfolioLoader from "@/components/portfolio-loader";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
@@ -63,8 +64,10 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="light">
           <TooltipProvider delayDuration={0}>
-            {children}
-            <Navbar />
+            <PortfolioLoader>
+              {children}
+              <Navbar />
+            </PortfolioLoader>
           </TooltipProvider>
         </ThemeProvider>
       </body>

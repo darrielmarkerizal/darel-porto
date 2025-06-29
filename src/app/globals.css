@@ -66,12 +66,11 @@
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -128,8 +127,6 @@ code {
 code > [data-line]::before {
   counter-increment: line;
   content: counter(line);
-
-  /* Other styling */
   display: inline-block;
   width: 1rem;
   margin-right: 2rem;
@@ -143,4 +140,21 @@ code[data-line-numbers-max-digits="2"] > [data-line]::before {
 
 code[data-line-numbers-max-digits="3"] > [data-line]::before {
   width: 3rem;
+}
+
+@layer utilities {
+  .terminal-cursor {
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
 }
